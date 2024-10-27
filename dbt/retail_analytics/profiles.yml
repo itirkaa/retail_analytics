@@ -1,0 +1,12 @@
+trino:
+  outputs:
+    dev:
+      type: trino
+      method: none 
+      user: admin
+      # password: 
+      host: localhost
+      catalog: iceberg
+      schema: retail
+      port: 8080
+  target: dev

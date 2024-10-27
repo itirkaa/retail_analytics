@@ -1,0 +1,86 @@
+version: 2
+
+models:
+  - name: stg_product_metadata
+    description: "Staged product metadata with data quality checks"
+    columns:
+      - name: product_id
+        description: "Unique identifier for the product"
+        tests:
+          - unique
+          - not_null
+      - name: name
+        description: "Product name"
+        tests:
+          - not_null
+      - name: category
+        description: "Product category"
+        tests:
+          - not_null
+          - accepted_values:
+              values: ['Electronics', 'Clothing', 'Home & Garden', 'Books', 'Sports']
+      - name: price
+        description: "Current product price"
+        tests:
+          - not_null
+          - positive_value
+      - name: loaded_at
+        description: "Timestamp when record was loaded into raw"
+        tests:
+          - not_null
+      - name: transformed_at
+        description: "Timestamp when record was transformed in staging"
+        tests:
+          - not_null
+
+  - name: stg_user_events
+    description: "Staged user events with parsed fields and data quality checks"
+    columns:
+      - name: event_id
+        description: "Unique identifier for the event"
+        tests:
+          - unique
+          - not_null
+      - name: user_id
+        description: "User identifier"
+        tests:
+          - not_null
+      - name: product_id
+        description: "Product identifier"
+        tests:
+          - not_null
+          - relationships:
+              to: ref('stg_product_metadata')
+              field: product_id
+      - name: event_type
+        description: "Type of event"
+        tests:
+          - not_null
+          - accepted_values:
+              values: ['view', 'purchase', 'add_to_cart', 'remove_from_cart']
+      - name: event_data
+        description: "JSON containing event-specific data"
+        tests:
+          - not_null
+      - name: event_timestamp
+        description: "Timestamp when the event occurred"
+        tests:
+          - not_null
+      - name: price
+        description: "Parsed price for purchase events"
+        tests:
+          - positive_value:
+              where: "event_type = 'purchase'"
+      - name: quantity
+        description: "Parsed quantity for purchase events"
+        tests:
+          - positive_value:
+              where: "event_type = 'purchase'"
+      - name: loaded_at
+        description: "Timestamp when record was loaded into raw"
+        tests:
+          - not_null
+      - name: transformed_at
+        description: "Timestamp when record was transformed in staging"
+        tests:
+          - not_null

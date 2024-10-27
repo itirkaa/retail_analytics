@@ -1,0 +1,11 @@
+-- Commenting out to avoid running with dbt tables
+-- CREATE TABLE hive.default.user_events (
+--      event_type VARCHAR,
+--      user_id INT,
+--      product_id INT,
+--      timestamp TIMESTAMP,
+--      amount DOUBLE
+--  ) WITH (
+--      external_location = 's3://retail-data/raw-data/user-events',
+--      format = 'JSON'
+--  );

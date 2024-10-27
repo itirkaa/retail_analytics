@@ -1,0 +1,53 @@
+version: 2
+
+sources:
+  - name: raw
+    database: retail_db
+    tables:
+      - name: product_metadata
+        description: "Raw product metadata from the product catalog"
+        columns:
+          - name: product_id
+            description: "Unique identifier for the product"
+            tests:
+              - unique
+              - not_null
+          - name: name
+            description: "Product name"
+            tests:
+              - not_null
+          - name: category
+            description: "Product category"
+            tests:
+              - not_null
+          - name: price
+            description: "Current product price"
+            tests:
+              - not_null
+              - positive_value
+
+      - name: user_events
+        description: "Raw user events from the web application"
+        columns:
+          - name: event_id
+            description: "Unique identifier for the event"
+            tests:
+              - unique
+              - not_null
+          - name: user_id
+            description: "User identifier"
+            tests:
+              - not_null
+          - name: product_id
+            description: "Product identifier"
+            tests:
+              - not_null
+              - relationships:
+                  to: ref('stg_product_metadata')
+                  field: product_id
+          - name: event_type
+            description: "Type of event (view, purchase, etc.)"
+            tests:
+              - not_null
+              - accepted_values:
+                  values: ['view', 'purchase', 'add_to_cart', 'remove_from_cart']

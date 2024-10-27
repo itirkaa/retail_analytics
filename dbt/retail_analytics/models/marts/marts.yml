@@ -1,0 +1,52 @@
+version: 2
+
+models:
+  - name: product_category_revenue
+    description: "Aggregated revenue by product category"
+    columns:
+      - name: category
+        description: "Product category name"
+      - name: total_revenue
+        description: "Total revenue generated for the category"
+      - name: unique_products_sold
+        description: "Number of unique products sold in the category"
+      - name: total_purchases
+        description: "Total number of purchase events in the category"
+      - name: updated_at
+        description: "Last update timestamp"
+
+  - name: top_viewed_products
+    description: "Top 3 most-viewed products"
+    columns:
+      - name: product_id
+        description: "Unique identifier for the product"
+      - name: product_name
+        description: "Name of the product"
+      - name: category
+        description: "Product category"
+      - name: current_price
+        description: "Current product price"
+      - name: view_count
+        description: "Total number of views"
+      - name: unique_viewers
+        description: "Number of unique users who viewed the product"
+      - name: last_viewed_at
+        description: "Timestamp of the most recent view"
+      - name: updated_at
+        description: "Last update timestamp"
+
+  - name: same_day_purchasers
+    description: "Users who made multiple purchases in a single day"
+    columns:
+      - name: user_id
+        description: "Unique identifier for the user"
+      - name: purchase_date
+        description: "Date of purchases"
+      - name: daily_purchase_count
+        description: "Number of purchase events made on this date"
+      - name: total_items_purchased
+        description: "Total quantity of items purchased"
+      - name: total_spent
+        description: "Total amount spent on purchases"
+      - name: updated_at
+        description: "Last update timestamp"
